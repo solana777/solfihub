@@ -1,9 +1,5 @@
-'use client';
-
-import { BlankView } from 'src/sections/blank/view';
-
-// ----------------------------------------------------------------------
+import CreateSolanaTokenView from 'src/sections/token-creator/view/create-solana-token-view';
 
 export default function Page() {
-  return <BlankView />;
+  return <CreateSolanaTokenView />;
 }

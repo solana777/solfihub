@@ -3,6 +3,7 @@
 const ROOTS = {
   AUTH: '/auth',
   DASHBOARD: '/dashboard',
+  TOOLS: '/tools',
 };
 
 // ----------------------------------------------------------------------
@@ -10,6 +11,25 @@ const ROOTS = {
 export const paths = {
   faqs: '/faqs',
   minimalStore: 'https://mui.com/store/items/minimal-dashboard/',
+  about: '/about',
+  contact: '/contact',
+  createToken: '/solana-token-creator',
+  multisender: '/solana-multisender',
+  todo: '/todo',
+  tools: {
+    root: `${ROOTS.TOOLS}/`,
+    burn: `${ROOTS.TOOLS}/solana-burn-token`,
+    createTokenPage: `${ROOTS.TOOLS}/solana-create-token-page`,
+    freezeToken: `${ROOTS.TOOLS}/solana-freeze-token`,
+    immutable: `${ROOTS.TOOLS}/solana-immutable-token`,
+    mintToken: `${ROOTS.TOOLS}/solana-mint-token`,
+    revokeFreeze: `${ROOTS.TOOLS}/solana-revoke-freeze`,
+    revokeMint: `${ROOTS.TOOLS}/solana-revoke-mint`,
+    snapshot: `${ROOTS.TOOLS}/solana-snapshot-tool`,
+    thawToken: `${ROOTS.TOOLS}/solana-thaw-token`,
+  },
+  p: '/p',
+
   // AUTH
   auth: {
     amplify: {

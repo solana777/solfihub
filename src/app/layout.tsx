@@ -13,6 +13,8 @@ import { ProgressBar } from 'src/components/progress-bar';
 import { MotionLazy } from 'src/components/animate/motion-lazy';
 import { detectSettings } from 'src/components/settings/server';
 import { SettingsDrawer, defaultSettings, SettingsProvider } from 'src/components/settings';
+import { ContextProvider } from 'src/context/ContextProvider';
+import { Snackbar } from 'src/components/snackbar';
 
 // ----------------------------------------------------------------------
 
@@ -33,19 +35,21 @@ export default async function RootLayout({ children }: Props) {
     <html lang="en" suppressHydrationWarning>
       <body>
         {getInitColorSchemeScript}
-
-        <SettingsProvider
-          settings={settings}
-          caches={CONFIG.isStaticExport ? 'localStorage' : 'cookie'}
-        >
-          <ThemeProvider>
-            <MotionLazy>
-              <ProgressBar />
-              <SettingsDrawer />
-              {children}
-            </MotionLazy>
-          </ThemeProvider>
-        </SettingsProvider>
+        <ContextProvider>
+          <SettingsProvider
+            settings={settings}
+            caches={CONFIG.isStaticExport ? 'localStorage' : 'cookie'}
+          >
+            <ThemeProvider>
+              <MotionLazy>
+                <ProgressBar />
+                <Snackbar />
+                <SettingsDrawer />
+                {children}
+              </MotionLazy>
+            </ThemeProvider>
+          </SettingsProvider>
+        </ContextProvider>
       </body>
     </html>
   );
