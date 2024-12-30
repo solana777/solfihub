@@ -71,7 +71,7 @@ export function CustomAdvertisement({
         <Box
           component="span"
           sx={{
-            ...textGradient(`to right, #D8EBFF, #8BBDFF`),
+            ...textGradient(`to right, #9B6DFF, #E5D6FF`),
             ml: 1,
           }}
         >

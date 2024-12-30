@@ -3,7 +3,7 @@ import axiosInstance from "src/utils/axios";
 const loginUser = async (walletAddress: string, signMessage: (message: Uint8Array) => Promise<Uint8Array>) => {
   try {
 
-    const message = `Login request to Parachute.ag: ${new Date().toISOString()}`;
+    const message = `Login request to Solfihub.com: ${new Date().toISOString()}`;
     const encodedMessage = new TextEncoder().encode(message);
     const signature = await signMessage(encodedMessage);
     const signatureBase64 = Buffer.from(signature).toString('base64');

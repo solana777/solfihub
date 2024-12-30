@@ -133,9 +133,9 @@ export function CustomFAQs({ faqs, ...other }: Props) {
 
       <m.div variants={varFade().in}>
         <Typography sx={{ mt: 2, mb: 3, color: 'text.secondary' }}>
-          Your thoughts help us improve. Share your feedback, suggestions, or any issues you’ve
+          Your thoughts help us improve. Share your feedback, suggestions, or any issues you&apos;ve
           encountered. <br />
-          We’re here to listen and make Parachute better for you.
+          We&apos;re here to listen and make Solfihub better for you.
         </Typography>
       </m.div>
 
@@ -143,7 +143,7 @@ export function CustomFAQs({ faqs, ...other }: Props) {
         <Button
           color="inherit"
           variant="contained"
-          href="mailto:support@parachute.ag?subject=[Feedback] from Customer"
+          href="mailto:support@solfihub.com?subject=[Feedback] from Customer"
           startIcon={<Iconify icon="fluent:mail-24-filled" />}
         >
           Submit Feedback

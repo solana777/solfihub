@@ -1,4 +1,4 @@
-import { DashboardLayout } from 'src/layouts/dashboard';
+import { MainLayout } from 'src/layouts/main';
 
 // ----------------------------------------------------------------------
 
@@ -7,5 +7,5 @@ type Props = {
 };
 
 export default function Layout({ children }: Props) {
-  return <DashboardLayout>{children}</DashboardLayout>;
+  return <MainLayout>{children}</MainLayout>;
 }

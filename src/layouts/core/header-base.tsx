@@ -1,8 +1,9 @@
 import type { NavSectionProps } from 'src/components/nav-section';
 
+import dynamic from 'next/dynamic';
+
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
-import Button from '@mui/material/Button';
 import { styled, useTheme } from '@mui/material/styles';
 
 import { paths } from 'src/routes/paths';
@@ -13,10 +14,9 @@ import { Logo } from 'src/components/logo';
 import { HeaderSection } from './header-section';
 import { Searchbar } from '../components/searchbar';
 import { MenuButton } from '../components/menu-button';
-import { SignInButton } from '../components/sign-in-button';
-import { SettingsButton } from '../components/settings-button';
 import { LanguagePopover } from '../components/language-popover';
 import { ContactsPopover } from '../components/contacts-popover';
+import ThemeChangeButton from '../components/theme-change-button';
 import { WorkspacesPopover } from '../components/workspaces-popover';
 import { NotificationsDrawer } from '../components/notifications-drawer';
 
@@ -52,6 +52,11 @@ const StyledDivider = styled('span')(({ theme }) => ({
   },
   '&::after': { bottom: -5, top: 'auto' },
 }));
+
+const WalletMultiButtonNoSSR = dynamic(
+  () => import('@solana/wallet-adapter-react-ui').then((mod) => mod.WalletMultiButton),
+  { ssr: false }
+);
 
 // ----------------------------------------------------------------------
 
@@ -93,7 +98,6 @@ export function HeaderBase({
   onOpenNav,
   layoutQuery,
   slotsDisplay: {
-    signIn = true,
     account = true,
     helpLink = true,
     settings = true,
@@ -130,7 +134,7 @@ export function HeaderBase({
             )}
 
             {/* -- Logo -- */}
-            <Logo data-slot="logo" />
+            <Logo  data-slot="logo" />
 
             {/* -- Divider -- */}
             <StyledDivider data-slot="divider" />
@@ -181,27 +185,10 @@ export function HeaderBase({
               {contacts && <ContactsPopover data-slot="contacts" data={data?.contacts} />}
 
               {/* -- Settings button -- */}
-              {settings && <SettingsButton data-slot="settings" />}
-
-              {/* -- Sign in button -- */}
-              {signIn && <SignInButton />}
+              {settings && <ThemeChangeButton data-slot="theme" />}
 
               {/* -- Purchase button -- */}
-              {purchase && (
-                <Button
-                  data-slot="purchase"
-                  variant="contained"
-                  rel="noopener"
-                  target="_blank"
-                  href={paths.minimalStore}
-                  sx={{
-                    display: 'none',
-                    [theme.breakpoints.up(layoutQuery)]: { display: 'inline-flex' },
-                  }}
-                >
-                  Purchase
-                </Button>
-              )}
+              {purchase && <WalletMultiButtonNoSSR />}
             </Box>
 
             {slots?.rightAreaEnd}

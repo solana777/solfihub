@@ -2,6 +2,7 @@ import { m } from 'framer-motion';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
+import { useTheme } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
@@ -37,6 +38,7 @@ export function CustomOverview({
   content,
   ...other
 }: Props) {
+  const theme = useTheme();
   const renderLines = (
     <>
       <FloatPlusIcon sx={{ top: 72, left: 72 }} />
@@ -53,7 +55,7 @@ export function CustomOverview({
         caption={sectionCaption}
         title={sectionTitle}
         txtGradient={sectionGradientText}
-        gradientColors={['#3E83FF', '#1F4AB7']}
+        gradientColors={[`${theme.palette.primary.light}`, `${theme.palette.primary.lighter}`]}
         sx={{ mb: { xs: 5, md: 8 }, textAlign: { xs: 'center', md: 'left' } }}
       />
 
@@ -102,11 +104,9 @@ export function CustomOverview({
           borderRadius: 2,
           position: 'absolute',
           bgcolor: 'background.default',
-          boxShadow: (theme) =>
-            `-40px 40px 80px 0px ${varAlpha(theme.vars.palette.info.mainChannel, 0.16)}`,
+          boxShadow: `-40px 40px 80px 0px ${varAlpha(theme.vars.palette.info.mainChannel, 0.16)}`,
           [stylesMode.dark]: {
-            boxShadow: (theme) =>
-              `-40px 40px 80px 0px ${varAlpha(theme.vars.palette.common.blackChannel, 0.16)}`,
+            boxShadow: `-40px 40px 80px 0px ${varAlpha(theme.vars.palette.common.blackChannel, 0.16)}`,
           },
         }}
       >

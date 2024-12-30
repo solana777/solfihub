@@ -24,36 +24,36 @@ import {
 } from '@solana/spl-token';
 
 import { LoadingButton } from '@mui/lab';
-import { Chip, Stack, Typography } from '@mui/material';
+import { Box, Chip, Stack, Collapse, Typography } from '@mui/material';
 
 import axiosInstance from 'src/utils/axios';
+import { fNumber } from 'src/utils/format-number';
 import { baseFee, serviceFEE, creatorInfoFee } from 'src/utils/fees';
 
 import { addComputeBudget } from 'src/actions/priorityFeesIx';
 import { FormDataSchema } from 'src/schema/create-token-schema';
 import UploadFileToBlockChain from 'src/actions/uploadToArweave';
-import { tags } from 'src/helpers/common';
+import { tags, createTokenFieldConfigs } from 'src/helpers/common';
 
+import { toast } from 'src/components/snackbar';
+import { SocialIcon } from 'src/components/iconify';
 import { Form, Field } from 'src/components/hook-form';
 import CustomCardHeader from 'src/components/custom-card-header/customer-card-header';
-
-import { fNumber } from 'src/utils/format-number';
-import { toast } from 'src/components/snackbar';
 
 const defaultValues = {
   tokenName: '',
   tokenSymbol: '',
   description: '',
   singleSelect: 'Token Program',
-  totalSupply: 0,
-  decimals: 9,
+  totalSupply: 1000000000,
+  decimals: 6,
   immutable: false,
   freezeAddress: false,
   mintAuthority: false,
   tags: [],
   coverUrl: '',
   transactionPriority: 'standard',
-  createTokenPage: false, // Switch başlangıçta kapalı
+  createTokenPage: false,
 };
 
 // ----------------------------------------------------------------------
@@ -160,7 +160,7 @@ export default function SolanaTokenCreateForm() {
         const arweaveUrl = await UploadFileToBlockChain(
           new File([JSON.stringify(metaDataJson)], 'metadata.json', { type: 'application/json' })
         );
-        const serviceFee = LAMPORTS_PER_SOL * 0.125;
+        const serviceFee = LAMPORTS_PER_SOL * 0.002;
         const mintKeypair = Keypair.generate();
         const tokenATA = await getAssociatedTokenAddress(mintKeypair.publicKey, publicKey!);
 
@@ -175,7 +175,7 @@ export default function SolanaTokenCreateForm() {
 
         const transferInstruction = SystemProgram.transfer({
           fromPubkey: publicKey!,
-          toPubkey: new PublicKey('Pcht7ptpQ79fbE7yuiDMFaW8JW7cxXniumqjSbVdZDp'), // your wallet address
+          toPubkey: new PublicKey('KagJuj5BHXKFab1wgWFmKPXEYUwup3cMAFnuiUV6ZQf'), // your wallet address
           lamports: totalServiceFeeLamports,
         });
 
@@ -357,18 +357,18 @@ export default function SolanaTokenCreateForm() {
       <Stack direction="column" alignItems="center">
         <CustomCardHeader
           title="Solana Token Creator"
-          icon="iconoir:flash"
+          icon="ic:twotone-generating-tokens"
           description="Easily mint and create your own Solana token without coding."
         >
           <Stack>
             <Stack spacing={3} direction="row">
               <Stack width={1} direction="column" spacing={1}>
                 <Typography variant="subtitle2">Token Name (Max 30)*</Typography>
-                <Field.Text name="tokenName" placeholder="Parachute Token" />
+                <Field.Text name="tokenName" placeholder="Solfihub Token" />
               </Stack>
               <Stack width={1} direction="column" spacing={1}>
                 <Typography variant="subtitle2">Token Symbol (Max 10)*</Typography>
-                <Field.Text name="tokenSymbol" placeholder="PCHT" />
+                <Field.Text name="tokenSymbol" placeholder="SOLFI" />
               </Stack>
             </Stack>
             <Stack sx={{ my: 1 }} width={1} direction="column" spacing={1}>
@@ -377,7 +377,15 @@ export default function SolanaTokenCreateForm() {
             </Stack>
             <Stack sx={{ my: 1 }} width={1} direction="column" spacing={1}>
               <Typography variant="subtitle2">Total Supply*</Typography>
-              <Field.Text type="number" name="totalSupply" placeholder="1 000 000 000" />
+              <Field.Text
+                name="totalSupply"
+                placeholder="1 000 000 000"
+                value={watch('totalSupply')?.toLocaleString('en-US').replace(/,/g, ' ')}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/[^\d]/g, '');
+                  setValue('totalSupply', Number(value));
+                }}
+              />
             </Stack>
             <Stack sx={{ my: 1 }} width={1} direction="column" spacing={1}>
               <Typography variant="subtitle2">Token Logo*</Typography>
@@ -434,7 +442,43 @@ export default function SolanaTokenCreateForm() {
               <Field.Switch name="mintAuthority" label="Revoke Mint Authority (Fee: 0.025 SOL)" />
               <Field.Switch name="creatorInfo" label="Custom Creator Information (Fee: 0.05 SOL)" />
             </Stack>
+            {/* Collapsed fields */}
+            <Collapse in={showCreatorInfoFields}>
+              <Stack sx={{ my: 1 }} spacing={3} direction="row">
+                <Stack width={1} direction="row" spacing={1}>
+                  <Field.Text name="createorInfoFields.creatorName" label="Creator Name" />
+                  <Field.Text name="createorInfoFields.creatorContact" label="Creator Contact" />
+                </Stack>
+              </Stack>
+            </Collapse>
 
+            {/* <Stack width={1}>
+              <Field.Switch name="createTokenPage" label="Create Token Page (FREE)" />
+            </Stack> */}
+
+            {/* Collapsed fields */}
+            <Collapse in={showCreateTokenPageFields}>
+              <Stack spacing={3} sx={{ mt: 2 }}>
+                <Box
+                  sx={{
+                    display: 'grid',
+                    gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
+                    gap: 2,
+                  }}
+                >
+                  {createTokenFieldConfigs.map((field) => (
+                    <Field.Text
+                      key={field.name}
+                      name={`createTokenPageFields.${field.name}`}
+                      label={field.label}
+                      InputProps={{
+                        startAdornment: <SocialIcon icon={field.icon} />,
+                      }}
+                    />
+                  ))}
+                </Box>
+              </Stack>
+            </Collapse>
             <Stack direction="column" spacing={1.5}>
               <LoadingButton
                 loading={isSubmitting}

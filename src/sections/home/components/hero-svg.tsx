@@ -248,7 +248,7 @@ export function Texts({ sx, ...other }: StackProps) {
           animate={{ x: ['0%', '-50%'] }}
           transition={{ duration: 64, ease: 'linear', repeat: Infinity }}
         >
-          Parachute Parachute
+          Solfihub Solfihub
         </m.text>
       </Box>
     </Stack>
