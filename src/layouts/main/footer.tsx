@@ -55,7 +55,7 @@ const LINKS = [
   },
   {
     headline: 'Contact',
-    children: [{ name: 'hello@solana.ag', href: 'mailto:hello@solana.ag' }],
+    children: [{ name: 'info@solfihub.com', href: 'mailto:info@solfihub.com' }],
   },
 ];
 
