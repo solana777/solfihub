@@ -37,23 +37,7 @@ const SOCIALS = [
 ];
 
 const LINKS = [
-  {
-    headline: 'SOLANA TOKEN GENERATOR',
-    children: [
-      { name: 'Create SPL Token on Solana', href: paths.createToken },
-      { name: 'Solana Token Creator', href: paths.createToken },
-      { name: 'Solana Multisender', href: paths.multisender },
-      { name: 'Solana Snapshot Tool', href: paths.tools.snapshot },
-      { name: 'Revoke Freeze Authority', href: paths.tools.revokeFreeze },
-      { name: 'Revoke Mint Authority', href: paths.tools.revokeMint },
-      { name: 'Create Token Page', href: paths.createToken },
-      { name: 'Make Token Immutable', href: paths.tools.immutable },
-      { name: 'Mint Tokens on Solana', href: paths.tools.mintToken },
-      { name: 'Burn Tokens on Solana', href: paths.tools.burn },
-      { name: 'Freeze Tokens on Solana', href: paths.tools.freezeToken },
-      { name: 'Unfreeze Tokens  on Solana', href: paths.tools.thawToken },
-    ],
-  },
+
   {
     headline: 'Company',
     children: [
